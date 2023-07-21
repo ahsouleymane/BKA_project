@@ -24,10 +24,10 @@
         <ul class="navbar-nav">
             {% if request.user.is_staff %}
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home' %}">Dashboard</a>
+                <a class="nav-link" href="{% url 'list_coordinates' %}">Coordonnées</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'products' %}">Products</a>
+                <a class="nav-link" href="{% url 'list_all_informations' %}">Informations validées</a>
             </li>
             {% endif %}
         </ul>

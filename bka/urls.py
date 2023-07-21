@@ -1,10 +1,17 @@
-from django.contrib import admin
-from django.urls import path, include
-from bka import *
-from django.contrib.auth import views as auth_views
+from django.urls import path
+from bka import views
 
 urlpatterns = [
-    path('login/', auth_views.LoginView.as_view(template_name='auth/login.html'), name='login'),
 
-    path('logout/', auth_views.LogoutView.as_view(template_name='auth/logout.html'), name='logout'),
+    path('login/', views.login, name="login"),
+    
+    path('logout/', views.logout, name="logout"),
+
+    path('add_installation_information/', views.add_installation_information, name='add_installation_information'),
+
+    path('edit_installation_information/<int:pk>/', views.edit_installation_information, name='edit_installation_information'),
+
+    path('list_coordinates/<int:pk>/', views.list_coordinates, name='list_coordinates'),
+
+    path('list_all_informations/<int:pk>/', views.list_all_informations, name='list_all_informations'),
 ]

@@ -1,8 +1,34 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from .forms import *
 from .models import *
 
+from .decorators import unauthenticated_user
+
 # Create your views here.
+
+@unauthenticated_user
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.info(request, 'Username / password is incorrect !!!')
+
+    context = {}
+    return render(request, 'bka/login.html', context)
+
+def logout(request):
+    logout(request)
+    messages.info(request, 'User logout successfuly !!!')
+    return redirect('login')
 
 def add_installation_information(request):
     form = installation_informationForm()
@@ -39,6 +65,7 @@ def list_coordinates(request, pk):
         information = None
 
     list = []
+    # if status == False, only half-empty fields will be displayed
     if information.status == False:
         list = information
 
@@ -52,6 +79,7 @@ def list_all_informations(request, pk):
         information = None
 
     list = []
+    # if status == true, only complete fields will be displayed
     if information.status == True:
         list = information
 

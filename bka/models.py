@@ -12,6 +12,7 @@ class installation_information(models.Model):
         ('Go', 'Go'),
     )
     measure = models.CharField(max_length=10, choices=CHOIX, default='Mo')
+    status = models.BooleanField(default=False)
 
     date_ajout = models.DateTimeField(auto_now_add=True)
     date_modif = models.DateTimeField(auto_now=True)

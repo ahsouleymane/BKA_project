@@ -5,6 +5,36 @@
 <br>
 
 <div class="row">
+    <div class="container col-md-8">
+        <div class="card text-white bg-secondary mb-3">
+            <div class="card-header">Liste des informations</div>
+            <div class="card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th></th>
+                    <th>Client</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Valeur</th>
+                    <th>Unité</th>
+                    <th>Editer</th>
+                </tr>
+
+                {% for l in list %}
+                    <tr>
+                        <th></th>
+                        <th>{{ l.customer }}</th>
+                        <th>{{ l.lat }}</th>
+                        <th>{{ l.lon }}</th>
+                        <th>{{ l.value }}</th>
+                        <th>{{ l.unit }}</th>
+                        <th><a class="btn btn-outline-light btn-sm" href="{% url 'edit_installation_informations' l.id %}">Voir</a></th>
+                    </tr>
+                {% endfor %}
+            </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

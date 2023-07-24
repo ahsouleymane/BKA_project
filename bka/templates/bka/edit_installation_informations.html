@@ -1,0 +1,35 @@
+{% extends 'bka/main.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<br>
+
+<div class="row">
+    <div class="container col-md-6">
+        <div class="card text-white bg-secondary mb-3">
+            <div class="card-header">Editer le débit</div>
+            <div class="card-body">
+
+                <form action="" method="POST">
+            
+                {% csrf_token %}
+                
+                {{ form.customer | as_crispy_field }}
+                {{ form.lat | as_crispy_field }}
+                {{ form.lon | as_crispy_field }}
+                {{ form.value | as_crispy_field }}
+                {{ form.unit | as_crispy_field }}
+
+                <button class="btn btn-light" type="submit" name="submit">
+                    valider formulaire
+                </button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

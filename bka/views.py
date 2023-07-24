@@ -30,7 +30,7 @@ def logout(request):
     messages.info(request, 'User logout successfuly !!!')
     return redirect('login')
 
-def add_installation_information(request):
+def add_installation_informations(request):
     form = installation_informationForm()
     if request.method == 'POST':
         form = installation_informationForm(request.POST)
@@ -38,25 +38,42 @@ def add_installation_information(request):
             form.save()
         return redirect('/list_coordinates/')
     context = {'form': form}
-    return render(request, 'bka/add_installation_information.html', context)
+    return render(request, 'bka/add_installation_informations.html', context)
 
-def edit_installation_information(request, pk):
+def edit_installation_informations(request, pk):
     try:
         information = installation_information.objects.get(id=pk)
     except installation_information.DoesNotExist:
         information = None
 
     if information.status == False:
-        information.status = True
+        form = all_installation_informationForm(instance=information)
+        if request.method == 'POST':
+            form = all_installation_informationForm(request.POST, instance=information)
+            if form.is_valid():
+                form.save()
+                information.status = True
+            return redirect('/list_all_informations/')
+        
+    context = {'form': form}
+    return render(request, 'bka/edit_installation_informations.html', context)
+
+def edit_coordinates(request, pk):
+    try:
+        information = installation_information.objects.get(id=pk)
+    except installation_information.DoesNotExist:
+        information = None
+
+    if information.status == False:
         form = installation_informationForm(instance=information)
         if request.method == 'POST':
             form = installation_informationForm(request.POST, instance=information)
             if form.is_valid():
                 form.save()
-            return redirect('/')
+            return redirect('/list_coordinates/')
         
     context = {'form': form}
-    return render(request, '', context)
+    return render(request, 'bka/edit_coordinates.html', context)
 
 def list_coordinates(request):
     try:
@@ -67,9 +84,9 @@ def list_coordinates(request):
     context = {'list': list_information}
     return render(request, 'bka/list_coordinates.html', context)
 
-def list_all_informations(request, pk):
+def list_all_informations(request):
     try:
-        list_information = installation_information.objects.all().filter(status=True)
+        list_information = installation_information.objects.all().filter(status=False)
     except installation_information.DoesNotExist:
         list_information = None
 

@@ -12,6 +12,14 @@ class installation_informationForm(forms.ModelForm):
             'lon': 'Longitude',
         }
 
+class validation_installation_informationForm(forms.ModelForm):
+    class Meta:
+        model = installation_information
+        fields = ['value', 'unit']
+        labels = {
+            'value': 'Valeur',
+            'unit': 'Unité',
+        }
 
 class all_installation_informationForm(forms.ModelForm):
     class Meta:

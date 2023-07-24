@@ -47,9 +47,9 @@ def edit_installation_informations(request, pk):
         information = None
 
     if information.status == False:
-        form = all_installation_informationForm(instance=information)
+        form = validation_installation_informationForm(instance=information)
         if request.method == 'POST':
-            form = all_installation_informationForm(request.POST, instance=information)
+            form = validation_installation_informationForm(request.POST, instance=information)
             if form.is_valid():
                 form.save()
                 information.status = True

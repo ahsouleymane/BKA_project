@@ -18,9 +18,9 @@ def login(request):
 
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('list_coordinates')
         else:
-            messages.info(request, 'Username / password is incorrect !!!')
+            messages.info(request, "Nom d'utilisateur / mot de passe incorrect !!!")
 
     context = {}
     return render(request, 'bka/login.html', context)
@@ -36,9 +36,9 @@ def add_installation_information(request):
         form = installation_informationForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('/')
+        return redirect('/list_coordinates/')
     context = {'form': form}
-    return render(request, '', context)
+    return render(request, 'bka/add_installation_information.html', context)
 
 def edit_installation_information(request, pk):
     try:
@@ -58,31 +58,21 @@ def edit_installation_information(request, pk):
     context = {'form': form}
     return render(request, '', context)
 
-def list_coordinates(request, pk):
+def list_coordinates(request):
     try:
-        information = installation_information.objects.get(id=pk)
+        list_information = installation_information.objects.all().filter(status=False)
     except installation_information.DoesNotExist:
-        information = None
+        list_information = None
 
-    list = []
-    # if status == False, only half-empty fields will be displayed
-    if information.status == False:
-        list = information
-
-    context = {'list': list}
-    return render(request, '', context)
+    context = {'list': list_information}
+    return render(request, 'bka/list_coordinates.html', context)
 
 def list_all_informations(request, pk):
     try:
-        information = installation_information.objects.get(id=pk)
+        list_information = installation_information.objects.all().filter(status=True)
     except installation_information.DoesNotExist:
-        information = None
+        list_information = None
 
-    list = []
-    # if status == true, only complete fields will be displayed
-    if information.status == True:
-        list = information
-
-    context = {'list': list}
-    return render(request, '', context)
+    context = {'list': list_information}
+    return render(request, 'bka/list_all_informations.html', context)
 

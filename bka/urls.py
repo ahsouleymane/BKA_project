@@ -1,6 +1,6 @@
 from django.urls import path
 from bka import views
-
+ 
 urlpatterns = [
 
     path('login/', views.login, name="login"),
@@ -11,7 +11,7 @@ urlpatterns = [
 
     path('edit_installation_information/<int:pk>/', views.edit_installation_information, name='edit_installation_information'),
 
-    path('list_coordinates/<int:pk>/', views.list_coordinates, name='list_coordinates'),
+    path('list_coordinates/', views.list_coordinates, name='list_coordinates'),
 
-    path('list_all_informations/<int:pk>/', views.list_all_informations, name='list_all_informations'),
+    path('list_all_informations/', views.list_all_informations, name='list_all_informations'),
 ]

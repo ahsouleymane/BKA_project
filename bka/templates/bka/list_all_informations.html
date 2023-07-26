@@ -17,7 +17,7 @@
                     <th>Longitude</th>
                     <th>Valeur</th>
                     <th>Unité</th>
-                    <th>Editer</th>
+                    <th></th>
                 </tr>
 
                 {% for l in list %}
@@ -28,7 +28,15 @@
                         <th>{{ l.lon }}</th>
                         <th>{{ l.value }}</th>
                         <th>{{ l.unit }}</th>
-                        <th><a class="btn btn-outline-light btn-sm" href="{% url 'edit_installation_informations' l.id %}">Voir</a></th>
+
+                        {% if l.status == False %}
+                            <th><a class="btn btn-outline-light btn-sm" style="width: 80%;" href="{% url 'validation_installation_informations' l.id %}">Validation</a></th>
+                        {% endif %}
+
+                        {% if l.status == True %}
+                            <th><a class="btn btn-outline-warning btn-sm" style="width: 80%;" href="{% url 'cancel_validation' l.id %}">Annuler validation</a></th>
+                        {% endif %}
+
                     </tr>
                 {% endfor %}
             </table>

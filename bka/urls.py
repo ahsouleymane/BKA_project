@@ -9,7 +9,9 @@ urlpatterns = [
 
     path('add_installation_informations/', views.add_installation_informations, name='add_installation_informations'),
 
-    path('edit_installation_informations/<int:pk>/', views.edit_installation_informations, name='edit_installation_informations'),
+    path('validation_installation_informations/<int:pk>/', views.validation_installation_informations, name='validation_installation_informations'),
+
+    path('cancel_validation/<int:pk>/', views.cancel_validation, name='cancel_validation'),
 
     path('edit_coordinates/<int:pk>/', views.edit_coordinates, name='edit_coordinates'),
 

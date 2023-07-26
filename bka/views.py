@@ -36,27 +36,43 @@ def add_installation_informations(request):
         form = installation_informationForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('/list_coordinates/')
+            return redirect('/list_coordinates/')
     context = {'form': form}
     return render(request, 'bka/add_installation_informations.html', context)
 
-def edit_installation_informations(request, pk):
+def validation_installation_informations(request, pk):
     try:
         information = installation_information.objects.get(id=pk)
     except installation_information.DoesNotExist:
         information = None
 
     if information.status == False:
+        information.status = True
         form = validation_installation_informationForm(instance=information)
         if request.method == 'POST':
             form = validation_installation_informationForm(request.POST, instance=information)
             if form.is_valid():
                 form.save()
-                information.status = True
-            return redirect('/list_all_informations/')
-        
+                information.save(update_fields=['status'])
+                return redirect('/list_all_informations/')
+    
     context = {'form': form}
-    return render(request, 'bka/edit_installation_informations.html', context)
+    return render(request, 'bka/validation_installation_informations.html', context)
+
+def cancel_validation(request, pk):
+    try:
+        information = installation_information.objects.get(id=pk)
+    except installation_information.DoesNotExist:
+        information = None
+
+    if information.status == True:
+        if request.method == "POST":
+            information.status = False
+            information.save(update_fields=['status'])
+            return redirect('/list_all_informations/')
+
+    context = {'item': information}
+    return render(request, 'bka/cancel_validation.html', context)
 
 def edit_coordinates(request, pk):
     try:
@@ -70,7 +86,7 @@ def edit_coordinates(request, pk):
             form = installation_informationForm(request.POST, instance=information)
             if form.is_valid():
                 form.save()
-            return redirect('/list_coordinates/')
+                return redirect('/list_coordinates/')
         
     context = {'form': form}
     return render(request, 'bka/edit_coordinates.html', context)
@@ -86,7 +102,7 @@ def list_coordinates(request):
 
 def list_all_informations(request):
     try:
-        list_information = installation_information.objects.all().filter(status=False)
+        list_information = installation_information.objects.all()
     except installation_information.DoesNotExist:
         list_information = None
 

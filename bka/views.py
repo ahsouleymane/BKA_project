@@ -4,12 +4,16 @@ from django.contrib import messages
 from .forms import *
 from .models import *
 
-from .decorators import unauthenticated_user
+from .decorators import *
+
+from django.contrib.auth.decorators import login_required
+
+from django.contrib.auth.models import User
 
 # Create your views here.
 
 @unauthenticated_user
-def login(request):
+def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -18,18 +22,25 @@ def login(request):
 
         if user is not None:
             login(request, user)
-            return redirect('list_coordinates')
+            return redirect('login_page')
         else:
             messages.info(request, "Nom d'utilisateur / mot de passe incorrect !!!")
 
     context = {}
     return render(request, 'bka/login.html', context)
 
-def logout(request):
+def logout_page(request):
     logout(request)
     messages.info(request, 'User logout successfuly !!!')
-    return redirect('login')
+    return redirect('login_page')
 
+def change_password(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+@allowed_users(allowed_roles=['DG'])
+@login_required(login_url='login_page')
 def add_installation_informations(request):
     form = installation_informationForm()
     if request.method == 'POST':
@@ -40,6 +51,8 @@ def add_installation_informations(request):
     context = {'form': form}
     return render(request, 'bka/add_installation_informations.html', context)
 
+@allowed_users(allowed_roles=['DG'])
+@login_required(login_url='login_page')
 def validation_installation_informations(request, pk):
     try:
         information = installation_information.objects.get(id=pk)
@@ -59,6 +72,8 @@ def validation_installation_informations(request, pk):
     context = {'form': form}
     return render(request, 'bka/validation_installation_informations.html', context)
 
+@allowed_users(allowed_roles=['DG'])
+@login_required(login_url='login_page')
 def cancel_validation(request, pk):
     try:
         information = installation_information.objects.get(id=pk)
@@ -74,6 +89,8 @@ def cancel_validation(request, pk):
     context = {'item': information}
     return render(request, 'bka/cancel_validation.html', context)
 
+@allowed_users(allowed_roles=['tech'])
+@login_required(login_url='login_page')
 def edit_coordinates(request, pk):
     try:
         information = installation_information.objects.get(id=pk)
@@ -91,6 +108,8 @@ def edit_coordinates(request, pk):
     context = {'form': form}
     return render(request, 'bka/edit_coordinates.html', context)
 
+@allowed_users(allowed_roles=['PMO', 'tech'])
+@login_required(login_url='login_page')
 def list_coordinates(request):
     try:
         list_information = installation_information.objects.all().filter(status=False)
@@ -100,6 +119,8 @@ def list_coordinates(request):
     context = {'list': list_information}
     return render(request, 'bka/list_coordinates.html', context)
 
+@allowed_users(allowed_roles=['DG'])
+@login_required(login_url='login_page')
 def list_all_informations(request):
     try:
         list_information = installation_information.objects.all()
@@ -108,4 +129,15 @@ def list_all_informations(request):
 
     context = {'list': list_information}
     return render(request, 'bka/list_all_informations.html', context)
+
+@allowed_users(allowed_roles=['tech', 'PMO'])
+@login_required(login_url='login_page')
+def list_valid_informations(request):
+    try:
+        list_valid_information = installation_information.objects.all().filter(status=True)
+    except installation_information.DoesNotExist:
+        list_valid_information = None
+
+    context = {'list': list_valid_information}
+    return render(request, 'bka/list_valid_informations.html', context)
 

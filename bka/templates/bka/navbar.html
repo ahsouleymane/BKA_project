@@ -22,18 +22,23 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            {% if request.user.is_staff %}
+            
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'list_coordinates' %}">Coordonnées</a>
+                <a class="nav-link" href="{% url 'list_coordinates' %}">Coordonnées |</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'list_all_informations' %}">Informations</a>
+            {% if request.user.groups == 'DG' %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'list_all_informations' %}">validation informations |</a>
             </li>
             {% endif %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'list_valid_informations' %}">Informations validées |</a>
+            </li>
+            
         </ul>
     </div>
 
-    <span class="hello-msg">Hello, {{ request.user }}</span>&nbsp;
-    <span><a class="href" href="{% url 'logout' %}">logout</a></span>
+    <span class="hello-msg">{{ request.user }}</span>&nbsp;
+    <span><a class="href" href="{% url 'logout_page' %}">logout</a></span>
 
 </nav>

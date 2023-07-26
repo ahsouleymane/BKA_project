@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 def unauthenticated_user(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('login')
+            return redirect('list_coordinates')
         else:
             return view_func(request, *args, **kwargs)
 
@@ -19,16 +19,21 @@ def allowed_users(allowed_roles=[]):
 
             if request.user.groups.exists():
                 group = request.user.groups.all()[0].name
-            
+
             if group in allowed_roles:
                 return view_func(request, *args, **kwargs)
-            else:
-                return redirect('user_page')
+
+            if group == 'DG':
+                return redirect('list_all_informations')
+            if group == 'PMO':
+                return redirect('list_valid_informations')
+            if group == 'tech':
+                return redirect('list_coordinates')
                 
         return wrapper_func
     return decorator
 
-def admin_only(view_func):
+def user_privileges(view_func):
     def wrapper_func(request, *args, **kwargs):
     
         group = None
@@ -36,9 +41,11 @@ def admin_only(view_func):
         if request.user.groups.exists():
             group = request.user.groups.all()[0].name
         
-        if group == 'customer':
-            return redirect('user_page')
-        if group == 'admin':
+        if group == 'DG':
+            return redirect('list_all_informations')
+        if group == 'PMO':
+            return redirect('list_valid_informations')
+        if group == 'tech':
             return view_func(request, *args, **kwargs)
             
     return wrapper_func

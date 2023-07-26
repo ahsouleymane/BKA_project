@@ -3,9 +3,11 @@ from bka import views
  
 urlpatterns = [
 
-    path('login/', views.login, name="login"),
+    path('', views.login_page, name="login_page"),
     
-    path('logout/', views.logout, name="logout"),
+    path('logout_page/', views.logout_page, name="logout_page"),
+
+    path('change_password/', views.change_password, name="change_password"),
 
     path('add_installation_informations/', views.add_installation_informations, name='add_installation_informations'),
 
@@ -18,4 +20,6 @@ urlpatterns = [
     path('list_coordinates/', views.list_coordinates, name='list_coordinates'),
 
     path('list_all_informations/', views.list_all_informations, name='list_all_informations'),
+
+    path('list_valid_informations/', views.list_valid_informations, name='list_valid_informations'),
 ]

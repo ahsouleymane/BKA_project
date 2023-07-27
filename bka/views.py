@@ -34,10 +34,18 @@ def logout_page(request):
     messages.info(request, 'User logout successfuly !!!')
     return redirect('login_page')
 
-def change_password(request):
+def change_password(request, pk):
+    try:
+        user = User.objects.get(id=pk)
+    except User.DoesNotExist:
+        user = None
+
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        o_password = request.POST.get('o_password')
+        n_password = request.POST.get('n_password')
+        cn_password = request.POST.get('cn_password')
+
+    #if user.password == o_password:
 
 @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')

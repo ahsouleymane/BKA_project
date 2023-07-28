@@ -1,4 +1,4 @@
-{% extends 'bka/main.html' %}
+{% extends 'bka/pmo/main_pmo.html' %}
 
 {% block content %}
 
@@ -7,7 +7,7 @@
 <div class="row">
     <div class="container col-md-8">
         <div class="card text-white bg-secondary mb-3">
-            <div class="card-header">Liste des informations</div>
+            <div class="card-header">Liste des informations validées</div>
             <div class="card-body">
             <table class="table table-sm">
                 <tr>
@@ -28,15 +28,7 @@
                         <th>{{ l.lon }}</th>
                         <th>{{ l.value }}</th>
                         <th>{{ l.unit }}</th>
-
-                        {% if l.status == False %}
-                            <th><a class="btn btn-outline-light btn-sm" style="width: 80%;" href="{% url 'validation_installation_informations' l.id %}">Validation</a></th>
-                        {% endif %}
-
-                        {% if l.status == True %}
-                            <th><a class="btn btn-outline-warning btn-sm" style="width: 80%;" href="{% url 'cancel_validation' l.id %}">Annuler validation</a></th>
-                        {% endif %}
-
+                        <th></th>
                     </tr>
                 {% endfor %}
             </table>

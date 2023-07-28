@@ -19,7 +19,13 @@ urlpatterns = [
 
     path('list_coordinates/', views.list_coordinates, name='list_coordinates'),
 
+    path('delete_coordinates/<int:pk>/', views.delete_coordinates, name='delete_coordinates'),
+
+    path('list_coordinates_pmo/', views.list_coordinates_pmo, name='list_coordinates_pmo'),
+
     path('list_all_informations/', views.list_all_informations, name='list_all_informations'),
 
     path('list_valid_informations/', views.list_valid_informations, name='list_valid_informations'),
+
+    path('list_valid_informations_pmo/', views.list_valid_informations_pmo, name='list_valid_informations_pmo'),
 ]

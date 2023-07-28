@@ -26,7 +26,7 @@ def allowed_users(allowed_roles=[]):
             if group == 'DG':
                 return redirect('list_all_informations')
             if group == 'PMO':
-                return redirect('list_valid_informations')
+                return redirect('list_coordinates_pmo')
             if group == 'tech':
                 return redirect('list_coordinates')
                 
@@ -44,8 +44,8 @@ def user_privileges(view_func):
         if group == 'DG':
             return redirect('list_all_informations')
         if group == 'PMO':
-            return redirect('list_valid_informations')
+            return redirect('list_coordinates_pmo')
         if group == 'tech':
-            return view_func(request, *args, **kwargs)
+            return redirect('list_coordinates')
             
     return wrapper_func

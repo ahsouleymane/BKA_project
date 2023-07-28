@@ -47,17 +47,18 @@ def change_password(request, pk):
 
     #if user.password == o_password:
 
-@allowed_users(allowed_roles=['DG'])
+@allowed_users(allowed_roles=['tech'])
 @login_required(login_url='login_page')
 def add_installation_informations(request):
     form = installation_informationForm()
     if request.method == 'POST':
         form = installation_informationForm(request.POST)
         if form.is_valid():
+            form.cleaned_data()
             form.save()
             return redirect('/list_coordinates/')
     context = {'form': form}
-    return render(request, 'bka/add_installation_informations.html', context)
+    return render(request, 'bka/tech/add_installation_informations.html', context)
 
 @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')
@@ -78,7 +79,7 @@ def validation_installation_informations(request, pk):
                 return redirect('/list_all_informations/')
     
     context = {'form': form}
-    return render(request, 'bka/validation_installation_informations.html', context)
+    return render(request, 'bka/dg/validation_installation_informations.html', context)
 
 @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')
@@ -95,7 +96,7 @@ def cancel_validation(request, pk):
             return redirect('/list_all_informations/')
 
     context = {'item': information}
-    return render(request, 'bka/cancel_validation.html', context)
+    return render(request, 'bka/dg/cancel_validation.html', context)
 
 @allowed_users(allowed_roles=['tech'])
 @login_required(login_url='login_page')
@@ -114,9 +115,17 @@ def edit_coordinates(request, pk):
                 return redirect('/list_coordinates/')
         
     context = {'form': form}
-    return render(request, 'bka/edit_coordinates.html', context)
+    return render(request, 'bka/tech/edit_coordinates.html', context)
 
-@allowed_users(allowed_roles=['PMO', 'tech'])
+@allowed_users(allowed_roles=['tech'])
+@login_required(login_url='login_page')
+def delete_coordinates(pk):
+    coordinates = installation_information.objects.get(id=pk)
+    if coordinates.status == False:
+        coordinates.delete()
+        return redirect('/list_coordinates/')
+
+@allowed_users(allowed_roles=['tech'])
 @login_required(login_url='login_page')
 def list_coordinates(request):
     try:
@@ -125,7 +134,18 @@ def list_coordinates(request):
         list_information = None
 
     context = {'list': list_information}
-    return render(request, 'bka/list_coordinates.html', context)
+    return render(request, 'bka/tech/list_coordinates.html', context)
+
+@allowed_users(allowed_roles=['PMO'])
+@login_required(login_url='login_page')
+def list_coordinates_pmo(request):
+    try:
+        list_information = installation_information.objects.all().filter(status=False)
+    except installation_information.DoesNotExist:
+        list_information = None
+
+    context = {'list': list_information}
+    return render(request, 'bka/pmo/list_coordinates_pmo.html', context)
 
 @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')
@@ -136,9 +156,20 @@ def list_all_informations(request):
         list_information = None
 
     context = {'list': list_information}
-    return render(request, 'bka/list_all_informations.html', context)
+    return render(request, 'bka/dg/list_all_informations.html', context)
 
-@allowed_users(allowed_roles=['tech', 'PMO'])
+@allowed_users(allowed_roles=['PMO'])
+@login_required(login_url='login_page')
+def list_valid_informations_pmo(request):
+    try:
+        list_valid_information = installation_information.objects.all().filter(status=True)
+    except installation_information.DoesNotExist:
+        list_valid_information = None
+
+    context = {'list': list_valid_information}
+    return render(request, 'bka/pmo/list_valid_informations_pmo.html', context)
+
+@allowed_users(allowed_roles=['tech'])
 @login_required(login_url='login_page')
 def list_valid_informations(request):
     try:
@@ -147,5 +178,5 @@ def list_valid_informations(request):
         list_valid_information = None
 
     context = {'list': list_valid_information}
-    return render(request, 'bka/list_valid_informations.html', context)
+    return render(request, 'bka/tech/list_valid_informations.html', context)
 

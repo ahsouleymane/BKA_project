@@ -14,6 +14,10 @@
                 <form action="" method="POST">
             
                 {% csrf_token %}
+
+                {% for message in messages %}
+                    <p style="color: yellowgreen; text-align: center;" id="messages">{{ message }}</p>
+                {% endfor %}
                 
                 {{ form.customer | as_crispy_field }}
                 {{ form.lat | as_crispy_field }}

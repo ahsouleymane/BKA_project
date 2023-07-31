@@ -51,16 +51,19 @@ def change_password(request, pk):
 @login_required(login_url='login_page')
 def add_installation_informations(request):
     form = installation_informationForm()
-    if request.method == 'POST':
+    if request.POST:
         customer = request.POST['customer']
         form = installation_informationForm(request.POST)
         if form.is_valid():
-            customer_existing = installation_information.objects.filter(customer=customer).exists
+            customer_existing = installation_information.objects.filter(customer=customer) and installation_information.objects.filter(customer=customer).exists
             if customer_existing:
-                messages.info(request, 'Cet.te client.e existe déja !!!')
+                messages.info(request, 'Cet.te client.e existe déja !!! veuillez réessayer...')
+                context = {'form': form}
+                return render(request, 'bka/tech/add_installation_informations.html', context)
             else:
                 form.save()
                 return redirect('/list_coordinates/')
+
     context = {'form': form}
     return render(request, 'bka/tech/add_installation_informations.html', context)
 
@@ -113,10 +116,17 @@ def edit_coordinates(request, pk):
     if information.status == False:
         form = installation_informationForm(instance=information)
         if request.method == 'POST':
+            customer = request.POST['customer']
             form = installation_informationForm(request.POST, instance=information)
             if form.is_valid():
-                form.save()
-                return redirect('/list_coordinates/')
+                customer_existing = installation_information.objects.filter(customer=customer) and installation_information.objects.filter(customer=customer).exists
+                if customer_existing:
+                    messages.info(request, 'Cet.te client.e existe déja !!! veuillez réessayer...')
+                    context = {'form': form}
+                    return render(request, 'bka/tech/edit_coordinates.html', context)
+                else:
+                    form.save()
+                    return redirect('/list_coordinates/')
         
     context = {'form': form}
     return render(request, 'bka/tech/edit_coordinates.html', context)

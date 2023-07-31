@@ -52,11 +52,15 @@ def change_password(request, pk):
 def add_installation_informations(request):
     form = installation_informationForm()
     if request.method == 'POST':
+        customer = request.POST['customer']
         form = installation_informationForm(request.POST)
         if form.is_valid():
-            form.cleaned_data()
-            form.save()
-            return redirect('/list_coordinates/')
+            customer_existing = installation_information.objects.filter(customer=customer).exists
+            if customer_existing:
+                messages.info(request, 'Cet.te client.e existe déja !!!')
+            else:
+                form.save()
+                return redirect('/list_coordinates/')
     context = {'form': form}
     return render(request, 'bka/tech/add_installation_informations.html', context)
 
@@ -119,11 +123,15 @@ def edit_coordinates(request, pk):
 
 @allowed_users(allowed_roles=['tech'])
 @login_required(login_url='login_page')
-def delete_coordinates(pk):
+def delete_coordinates(request, pk):
     coordinates = installation_information.objects.get(id=pk)
     if coordinates.status == False:
-        coordinates.delete()
-        return redirect('/list_coordinates/')
+        if request.method == "POST":
+            coordinates.delete()
+            return redirect('/list_coordinates/')
+    
+    context = {'item': coordinates}
+    return render(request, 'bka/tech/delete_validation.html', context)
 
 @allowed_users(allowed_roles=['tech'])
 @login_required(login_url='login_page')

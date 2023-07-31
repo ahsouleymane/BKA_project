@@ -1,0 +1,34 @@
+{% extends 'bka/dg/main_dg.html' %}
+
+{% block content %}
+
+<form action="{% url 'delete_coordinates' item.id %}" method="POST">
+
+    {% csrf_token %}
+
+    <br>
+ 
+    <div class="row">
+        <div class="container col-md-6">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-header">Annuler la validation</div>
+                <div class="card-body">
+
+                    <strong><p>Etes vous sure de vouloir supprimer "{{item}}" ?</p></strong>
+
+                    <div>
+
+                        <a class="btn btn-warning btn-sm" href="{% url 'list_coordinates' %}">Cancel</a>
+
+                        <input class="btn btn-danger btn-sm" type="submit" name="confirm">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+{% endblock %}

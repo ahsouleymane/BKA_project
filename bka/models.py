@@ -20,5 +20,4 @@ class installation_information(models.Model):
 
     def __str__(self):
         return str(self.customer) 
-    
 

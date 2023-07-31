@@ -9,7 +9,7 @@
         <div class="card text-white bg-secondary mb-3">
             <div class="card-header">Liste des coordonnées</div>
             <div class="card-body">
-            <a href="{% url 'add_installation_informations' %}" class="btn btn-success" role="button">Ajouter coordonnées</a>
+            <a href="{% url 'add_installation_informations' %}" class="btn btn-outline-light" role="button">Ajouter coordonnées</a>
             <hr>
             <table class="table table-sm">
                 <tr>
@@ -17,7 +17,7 @@
                     <th>Client</th>
                     <th>Latitude</th>
                     <th>Longitude</th>
-                    <th>Editer</th>
+                    <th></th>
                 </tr>
 
                 {% for l in list %}
@@ -26,7 +26,10 @@
                         <th>{{ l.customer }}</th>
                         <th>{{ l.lat }}</th>
                         <th>{{ l.lon }}</th>
-                        <th><a class="btn btn-outline-light btn-sm" href="{% url 'edit_coordinates' l.id %}">Editer</a></th>
+                        <th>
+                            <a class="btn btn-outline-warning btn-sm" href="{% url 'edit_coordinates' l.id %}">Editer</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'delete_coordinates' l.id %}">Supprimer</a>
+                        </th>
                     </tr>
                 {% endfor %}
             </table>

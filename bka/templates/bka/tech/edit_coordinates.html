@@ -19,9 +19,10 @@
                 {{ form.lat | as_crispy_field }}
                 {{ form.lon | as_crispy_field }}
 
-                <button class="btn btn-light" type="submit" name="submit">
+                <button class="btn btn-sm btn-light" type="submit" name="submit">
                     valider formulaire
                 </button>
+                <a class="btn btn-danger btn-sm" type="button" href="{% url 'list_coordinates' %}">Annuler</a>
 
                 </form>
 

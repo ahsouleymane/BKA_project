@@ -15,8 +15,7 @@
                     <th>Client</th>
                     <th>Latitude</th>
                     <th>Longitude</th>
-                    <th>Valeur</th>
-                    <th>Unité</th>
+                    <th>Service</th>
                     <th></th>
                 </tr>
 
@@ -26,8 +25,7 @@
                         <th>{{ l.customer }}</th>
                         <th>{{ l.lat }}</th>
                         <th>{{ l.lon }}</th>
-                        <th>{{ l.value }}</th>
-                        <th>{{ l.unit }}</th>
+                        <th>{{ l.service }}</th>
 
                         {% if l.status == False %}
                             <th><a class="btn btn-outline-light btn-sm" style="width: 80%;" href="{% url 'validation_installation_informations' l.id %}">Validation</a></th>

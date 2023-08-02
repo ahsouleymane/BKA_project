@@ -21,20 +21,18 @@ class installation_informationForm(forms.ModelForm):
 class validation_installation_informationForm(forms.ModelForm):
     class Meta:
         model = installation_information
-        fields = ['value', 'unit']
+        fields = ['service']
         labels = {
-            'value': 'Valeur',
-            'unit': 'Unité',
+            'service': 'Service',
         }
 
 class all_installation_informationForm(forms.ModelForm):
     class Meta:
         model = installation_information
-        fields = ['customer', 'lat', 'lon', 'value', 'unit']
+        fields = ['customer', 'lat', 'lon', 'service']
         labels = {
             'customer': 'Customer',
             'lat': 'Latitude',
             'lon': 'Longitude',
-            'value': 'Valeur',
-            'unit': 'Unité',
+            'service': 'Service',
         }

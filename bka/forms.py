@@ -26,6 +26,10 @@ class validation_installation_informationForm(forms.ModelForm):
             'service': 'Service',
         }
 
+    def __init__(self, *args, **kwargs):
+            super(validation_installation_informationForm,self).__init__(*args, **kwargs)
+            self.fields['service'].empty_label = "Choisir"
+
 class all_installation_informationForm(forms.ModelForm):
     class Meta:
         model = installation_information

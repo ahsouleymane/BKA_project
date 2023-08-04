@@ -40,3 +40,16 @@ class all_installation_informationForm(forms.ModelForm):
             'lon': 'Longitude',
             'service': 'Service',
         }
+
+class forfait_residentielForm(forms.ModelForm):
+    class Meta:
+        model = forfait_residentiel
+        fields = ['nom_service', 'nom_produit', 'debit', 'volume_jour', 'volume_nuit', 'validite']
+        labels = {
+            'nom_service': 'Nom Service',
+            'nom_produit': 'Nom Produit',
+            'debit': 'Débit',
+            'volume_jour': 'Volume Jour',
+            'volume_nuit': 'Volume Nuit',
+            'validite': 'Validité',
+        }

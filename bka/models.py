@@ -4,9 +4,9 @@ from django.db import models
 
 class forfait_residentiel(models.Model):
     nom_service = models.CharField(max_length=20, null=True)
-    nom_produit = models.CharField(max_length=30, null=True)
-    debit = models.CharField(max_length=10, null=True)
-    volume_jour = models.CharField(max_length=10, null=True)
+    nom_produit = models.CharField(max_length=50, null=True)
+    debit = models.CharField(max_length=20, null=True)
+    volume_jour = models.CharField(max_length=20, null=True)
     volume_nuit = models.CharField(max_length=50, null=True)
     validite = models.CharField(max_length=30, null=True)
 
@@ -14,20 +14,20 @@ class forfait_residentiel(models.Model):
     date_modif = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.nom_service) + ' ' + str(self.nom_produit) + ' ' + str(self.debit) + ' ' + str(self.volume_jour) + ' ' + str(self.volume_nuit) + ' ' + str(self.validite)
+        return str(self.nom_service) + ' | ' + str(self.nom_produit) + ' | ' + str(self.debit) + ' | ' + str(self.volume_jour) + ' | ' + str(self.volume_nuit) + ' | ' + str(self.validite)
     
 class forfait_entreprise(models.Model):
     nom_service = models.CharField(max_length=20, null=True)
-    nom_produit = models.CharField(max_length=30, null=True)
-    debit = models.CharField(max_length=10, null=True)
-    volume = models.CharField(max_length=10, null=True)
+    nom_produit = models.CharField(max_length=50, null=True)
+    debit = models.CharField(max_length=20, null=True)
+    volume = models.CharField(max_length=20, null=True)
     validite = models.CharField(max_length=30, null=True)
 
     date_ajout = models.DateTimeField(auto_now_add=True)
     date_modif = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.nom_service) + ' ' + str(self.nom_produit) + ' ' + str(self.debit) + ' ' + str(self.volume) + ' ' + str(self.validite)
+        return str(self.nom_service) + ' | ' + str(self.nom_produit) + ' | ' + str(self.debit) + ' | ' + str(self.volume) + ' | ' + str(self.validite)
 
 
 

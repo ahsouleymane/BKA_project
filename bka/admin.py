@@ -6,4 +6,3 @@ from .models import *
 admin.site.register(installation_information)
 admin.site.register(forfait_residentiel)
 admin.site.register(forfait_entreprise)
-admin.site.register(service)

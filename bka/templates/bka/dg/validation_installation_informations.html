@@ -18,7 +18,12 @@
                 {{ form.instance.customer }} <hr>
                 {{ form.instance.lat}} <hr>
                 {{ form.instance.lon }} <hr>
-                {{ form.service | as_crispy_field }}
+                {{ form.type_forfait | as_crispy_field }}
+                {% if type_forfait == 'forfait résidentiel' %}
+                    {{ form.forfait_residentiel | as_crispy_field }}
+                {% elif type_forfait == 'forfait entreprise' %}
+                    {{ form.forfait_entreprise | as_crispy_field }}
+                {% endif %}
 
                 <button class="btn btn-light" type="submit" name="submit">
                     valider formulaire

@@ -5,7 +5,7 @@
 <br>
 
 <div class="row">
-    <div class="container col-md-8">
+    <div class="container col-md-10">
         <div class="card text-white bg-secondary mb-3">
             <div class="card-header">Liste des informations</div>
             <div class="card-body">
@@ -15,7 +15,9 @@
                     <th>Client</th>
                     <th>Latitude</th>
                     <th>Longitude</th>
-                    <th>Service</th>
+                    <th>Type Forfait</th>
+                    <th>Forfait Résidentiel</th>
+                    <th>Forfait Entreprise</th>
                     <th></th>
                 </tr>
 
@@ -25,7 +27,9 @@
                         <th>{{ l.customer }}</th>
                         <th>{{ l.lat }}</th>
                         <th>{{ l.lon }}</th>
-                        <th>{{ l.service }}</th>
+                        <th>{{ l.type_forfait }}</th>
+                        <th>{{ l.forfait_residentiel }}</th>
+                        <th>{{ l.forfait_entreprise }}</th>
 
                         {% if l.status == False %}
                             <th><a class="btn btn-outline-light btn-sm" style="width: 80%;" href="{% url 'validation_installation_informations' l.id %}">Validation</a></th>

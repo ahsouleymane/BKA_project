@@ -30,18 +30,21 @@ class forfait_entreprise(models.Model):
         return str(self.nom_service) + ' | ' + str(self.nom_produit) + ' | ' + str(self.debit) + ' | ' + str(self.volume) + ' | ' + str(self.validite)
 
 
-
-class service(models.Model):
-    forfait_residentiel = models.ForeignKey(forfait_residentiel, null=True, on_delete=models.CASCADE)
-    forfait_entreprise = models.ForeignKey(forfait_entreprise, null=True, on_delete=models.CASCADE)
-
 class installation_information(models.Model):
-    service = models.ForeignKey(service, null=True, on_delete=models.CASCADE)
     customer = models.CharField(max_length=100, null=True)
     lat = models.FloatField(max_length=20, null=True)
     lon = models.FloatField(max_length=20, null=True)
-    value = models.FloatField(max_length=8, default=0.0)
+
+    CHOIX = (
+        ('forfait résidentiel', 'Forfait Résidentiel'),
+        ('forfait entreprise', 'Forfait Entreprise'),
+    )
+    type_forfait = models.CharField(max_length=50, choices=CHOIX, null=True)
+    forfait_residentiel = models.ForeignKey(forfait_residentiel, null=True, on_delete=models.CASCADE)
+    forfait_entreprise = models.ForeignKey(forfait_entreprise, null=True, on_delete=models.CASCADE)
+
     cle_activation = models.CharField(max_length=100, null=True)
+
     status = models.BooleanField(default=False)
     activer = models.BooleanField(default=False)
 

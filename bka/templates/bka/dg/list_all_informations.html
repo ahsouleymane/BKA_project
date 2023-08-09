@@ -15,9 +15,8 @@
                     <th>Client</th>
                     <th>Latitude</th>
                     <th>Longitude</th>
-                    <th>Type Forfait</th>
-                    <th>Forfait Résidentiel</th>
-                    <th>Forfait Entreprise</th>
+                    <th>Forfait</th>
+                    <th>Service</th>
                     <th></th>
                 </tr>
 
@@ -27,9 +26,8 @@
                         <th>{{ l.customer }}</th>
                         <th>{{ l.lat }}</th>
                         <th>{{ l.lon }}</th>
-                        <th>{{ l.type_forfait }}</th>
-                        <th>{{ l.forfait_residentiel }}</th>
-                        <th>{{ l.forfait_entreprise }}</th>
+                        <th>{{ l.forfait }}</th>
+                        <th>{{ l.service }}</th>
 
                         {% if l.status == False %}
                             <th><a class="btn btn-outline-light btn-sm" style="width: 80%;" href="{% url 'validation_installation_informations' l.id %}">Validation</a></th>

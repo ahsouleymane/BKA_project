@@ -46,9 +46,9 @@ class all_installation_informationForm(forms.ModelForm):
             'cle_activation': 'Clé Activation',
         }
 
-class forfaitForm(forms.ModelForm):
+class ServiceForm(forms.ModelForm):
     class Meta:
-        model = forfait
+        model = service
         fields = ['nom_service', 'nom_produit', 'debit', 'volume_jour', 'volume_nuit', 'validite']
         labels = {
             'nom_service': 'Nom Service',

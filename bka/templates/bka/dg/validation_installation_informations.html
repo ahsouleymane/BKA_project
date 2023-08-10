@@ -36,7 +36,7 @@
 
 <script>
     $("#forfait").change(function (){
-        const url = $("#validation_installation_informationForm").attr("validation_installation_informations");
+        const url = $("#validation_installation_informationForm").attr("data-services-url");
         const idForfait = $(this).val(); 
 
         $.ajax({

@@ -83,9 +83,17 @@ def validation_installation_informations(request, pk):
             if form.is_valid():
                 form.save()
                 information.save(update_fields=['status'])
-                return redirect('/list_all_informations/')
+                return redirect('/list_all_informations/', id=pk)
     
     context = {'form': form}
+    return render(request, 'bka/dg/validation_installation_informations.html', context)
+
+@allowed_users(allowed_roles=['DG'])
+@login_required(login_url='login_page')
+def load_services(request):
+    id_forfait = request.GET.get('id_forfait')
+    services = service.objects.filter(forfait=id_forfait).all()
+    context = {'services': services}
     return render(request, 'bka/dg/validation_installation_informations.html', context)
 
 @allowed_users(allowed_roles=['DG'])

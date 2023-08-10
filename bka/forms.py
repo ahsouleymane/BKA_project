@@ -28,9 +28,17 @@ class validation_installation_informationForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-            super(validation_installation_informationForm,self).__init__(*args, **kwargs)
-            self.fields['forfait'].empty_label = "Choisir un forfait"
-            self.fields['forfait_entreprise'].empty_label = "Choisir un service"
+            super.__init__(*args, **kwargs)
+            self.fields['service'].queryset = service.objects.none()
+
+            if 'forfait' in self.data:
+                try:
+                    id_forfait = int(self.data.get('forfait'))
+                    self.fields['service'].queryset = service.objects.filter(forfait=id_forfait).order_by('nom')
+                except (ValueError, TypeError):
+                    pass
+            elif self.instance.pk:
+                self.fields['service'].queryset = self.instance.forfait.service_set.order_by('nom')
 
 
 class all_installation_informationForm(forms.ModelForm):

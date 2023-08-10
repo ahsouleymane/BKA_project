@@ -18,7 +18,6 @@
                 {{ form.instance.customer }} <hr>
                 {{ form.instance.lat}} <hr>
                 {{ form.instance.lon }} <hr>
-                {{ form.type_forfait | as_crispy_field }}
                 {{ form.forfait | as_crispy_field }}
                 {{ form.service | as_crispy_field }}
 
@@ -34,3 +33,20 @@
 </div>
 
 {% endblock %}
+
+<script>
+    $("#forfait").change(function (){
+        const url = $("#validation_installation_informationForm").attr("validation_installation_informations");
+        const idForfait = $(this).val(); 
+
+        $.ajax({
+            url: url,
+            data: {
+                'id_forfait': idForfait
+            },
+            success: function(data){
+                $("#service").html(data);
+            }
+        });
+    });
+</script>

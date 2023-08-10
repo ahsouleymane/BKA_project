@@ -25,10 +25,12 @@ def allowed_users(allowed_roles=[]):
 
             if group == 'DG':
                 return redirect('list_all_informations')
-            if group == 'PMO':
+            elif group == 'PMO':
                 return redirect('list_coordinates_pmo')
-            if group == 'tech':
+            elif group == 'tech':
                 return redirect('list_coordinates')
+            else:
+                return HttpResponse("Vous n'etes pas autorisé à acceder à cette page")
                 
         return wrapper_func
     return decorator
@@ -43,9 +45,11 @@ def user_privileges(view_func):
         
         if group == 'DG':
             return redirect('list_all_informations')
-        if group == 'PMO':
+        elif group == 'PMO':
             return redirect('list_coordinates_pmo')
-        if group == 'tech':
+        elif group == 'tech':
             return redirect('list_coordinates')
+        else:
+            return redirect('login_page')
             
     return wrapper_func

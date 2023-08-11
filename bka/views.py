@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import *
@@ -9,6 +10,8 @@ from .decorators import *
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.models import User
+
+import json as JsonResponse
 
 # Create your views here.
 
@@ -91,10 +94,12 @@ def validation_installation_informations(request, pk):
 @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')
 def load_services(request):
-    id_forfait = request.GET.get('id_forfait')
-    services = service.objects.filter(forfait=id_forfait).all()
+    forfait_id = request.GET.get('forfait_id')
+    services = service.objects.filter(forfait=forfait_id).all()
     context = {'services': services}
-    return render(request, 'bka/dg/validation_installation_informations.html', context)
+    #return render(request, 'bka/dg/services_dropdown_list_options.html', context)
+    #print(list(services.values('id', 'nom_service')))
+    return JsonResponse(list(services.values('id', 'nom_service')), safe=False)
 
 @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')

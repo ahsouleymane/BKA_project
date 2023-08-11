@@ -1,0 +1,5 @@
+<option value="">Choisir un service</option>
+
+{% for service in services %}
+    <option value="{{ service.pk }}">{{ service.nom_service }}</option>
+{% endfor %}

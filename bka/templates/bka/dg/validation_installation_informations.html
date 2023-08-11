@@ -11,7 +11,7 @@
             <div class="card-header">Formulaire de validation</div>
             <div class="card-body">
 
-                <form action="" method="POST">
+                <form action="" id="validation_installation_informationForm" method="POST" data-services-url="{% url 'ajax_load_services' %}">
             
                 {% csrf_token %}
                 
@@ -35,17 +35,17 @@
 {% endblock %}
 
 <script>
-    $("#forfait").change(function (){
+    $("#id_forfait").change(function (){
         const url = $("#validation_installation_informationForm").attr("data-services-url");
         const idForfait = $(this).val(); 
 
         $.ajax({
             url: url,
             data: {
-                'id_forfait': idForfait
+                'forfait_id': idForfait
             },
             success: function(data){
-                $("#service").html(data);
+                $("#id_service").html(data);
             }
         });
     });

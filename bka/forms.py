@@ -31,7 +31,7 @@ class validation_installation_informationForm(forms.ModelForm):
             super().__init__(*args, **kwargs)
             self.fields['service'].queryset = service.objects.none()
 
-            """ if 'forfait' in self.data:
+            if 'forfait' in self.data:
                 try:
                     forfait_id = int(self.data.get('forfait'))
                     self.fields['service'].queryset = service.objects.filter(forfait_id=forfait_id).order_by('nom_service')
@@ -39,7 +39,7 @@ class validation_installation_informationForm(forms.ModelForm):
                     pass
             elif self.instance.pk:
                 self.fields['service'].queryset = self.instance.forfait.service_set.order_by('nom_service')
- """
+
 
 class all_installation_informationForm(forms.ModelForm):
     class Meta:

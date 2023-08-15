@@ -27,26 +27,26 @@
 
                 </form>
 
+                <script>
+                    $("#id_forfait").change(function (){
+                        const url = $("#validation_installation_informationForm").attr("data-services-url");
+                        const idForfait = $(this).val(); 
+                
+                        $.ajax({
+                            url: url,
+                            data: {
+                                'forfait_id': idForfait
+                            },
+                            success: function(data){
+                                $("#id_service").html(data);
+                            }
+                        });
+                    });
+                </script>
+
             </div>
         </div>
     </div>
 </div>
 
 {% endblock %}
-
-<script>
-    $("#id_forfait").change(function (){
-        const url = $("#validation_installation_informationForm").attr("data-services-url");
-        const idForfait = $(this).val(); 
-
-        $.ajax({
-            url: url,
-            data: {
-                'forfait_id': idForfait
-            },
-            success: function(data){
-                $("#id_service").html(data);
-            }
-        });
-    });
-</script>

@@ -38,7 +38,7 @@ class validation_installation_informationForm(forms.ModelForm):
                 except (ValueError, TypeError):
                     pass
             elif self.instance.pk:
-                self.fields['service'].queryset = self.instance.forfait.service_set.order_by('nom_service')
+                self.fields['service'].queryset = self.instance.forfait.service_set.all()
 
 
 class all_installation_informationForm(forms.ModelForm):

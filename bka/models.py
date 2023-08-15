@@ -21,8 +21,8 @@ class service(models.Model):
     date_modif = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.nom_service) + ' - ' + str(self.nom_produit) + ' - ' + str(self.debit) + ' - ' + str(self.volume_jour) + ' - ' + str(self.volume_nuit) + ' - ' + str(self.validite)
-
+        return str(self.nom_service)
+    
 class installation_information(models.Model):
     customer = models.CharField(max_length=100, null=True)
     lat = models.FloatField(max_length=20, null=True)

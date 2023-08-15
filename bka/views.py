@@ -95,12 +95,10 @@ def validation_installation_informations(request, pk):
 @login_required(login_url='login_page')
 def load_services(request):
     forfait_id = request.GET.get('forfait_id')
-    services = service.objects.filter(forfait=forfait_id).all()
+    services = service.objects.filter(forfait_id=forfait_id).all()
     context = {'services': services}
-    #return render(request, 'bka/dg/services_dropdown_list_options.html', context)
-    #print(list(services.values('id', 'nom_service')))
-    return JsonResponse(list(services.values('id', 'nom_service')), safe=False)
-
+    return render(request, 'bka/dg/services_dropdown_list_options.html', context)
+    
 @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')
 def cancel_validation(request, pk):

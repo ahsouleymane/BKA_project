@@ -11,7 +11,7 @@
             <div class="card-header">Editer des coordonnées</div>
             <div class="card-body">
 
-                <form action="" method="POST">
+                <form method="POST" id="validation_installation_informationForm" data-services-url="{% url 'ajax_load_services' %}">
             
                 {% csrf_token %}
 
@@ -22,6 +22,9 @@
                 {{ form.customer | as_crispy_field }}
                 {{ form.lat | as_crispy_field }}
                 {{ form.lon | as_crispy_field }}
+                {{ form.forfait | as_crispy_field }}
+                {{ form.service | as_crispy_field }}
+
 
                 <button class="btn btn-sm btn-light" type="submit" name="submit">
                     valider formulaire
@@ -29,6 +32,24 @@
                 <a class="btn btn-danger btn-sm" type="button" href="{% url 'list_coordinates' %}">Annuler</a>
 
                 </form>
+
+                <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+                <script>
+                    $("#id_forfait").change(function (){
+                        const url = $("#validation_installation_informationForm").attr("data-services-url");
+                        const idForfait = $(this).val(); 
+                
+                        $.ajax({
+                            url: url,
+                            data: {
+                                'forfait_id': idForfait
+                            },
+                            success: function(data){
+                                $("#id_service").html(data);
+                            }
+                        });
+                    });
+                </script>
 
             </div>
         </div>

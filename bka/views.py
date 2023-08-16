@@ -76,7 +76,7 @@ def validation_installation_informations(request, pk):
     try:
         information = installation_information.objects.get(id=pk)
     except installation_information.DoesNotExist:
-        information = None
+        information = None 
 
     if information.status == False:
         information.status = True
@@ -95,7 +95,7 @@ def validation_installation_informations(request, pk):
 @login_required(login_url='login_page')
 def load_services(request):
     forfait_id = request.GET.get('forfait_id')
-    services = service.objects.filter(forfait_id=forfait_id).all()
+    services = service.objects.filter(forfait_id=forfait_id).order_by('nom_service')
     context = {'services': services}
     return render(request, 'bka/dg/services_dropdown_list_options.html', context)
     

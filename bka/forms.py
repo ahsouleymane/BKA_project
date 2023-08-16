@@ -11,11 +11,13 @@ class CreateUserForm(UserCreationForm):
 class installation_informationForm(forms.ModelForm):
     class Meta:
         model = installation_information
-        fields = ['customer', 'lat', 'lon']
+        fields = ['customer', 'lat', 'lon', 'forfait', 'service']
         labels = {
             'customer': 'Customer',
             'lat': 'Latitude',
             'lon': 'Longitude',
+            'forfait': 'Forfait',
+            'service': 'Service',
         }
 
 class validation_installation_informationForm(forms.ModelForm):
@@ -34,11 +36,18 @@ class validation_installation_informationForm(forms.ModelForm):
             if 'forfait' in self.data:
                 try:
                     forfait_id = int(self.data.get('forfait'))
-                    self.fields['service'].queryset = service.objects.filter(forfait=forfait_id).order_by('nom_service')
+                    self.fields['service'].queryset = service.objects.filter(forfait_id=forfait_id).order_by('nom_service')
                 except (ValueError, TypeError):
                     pass
             elif self.instance.pk:
-                self.fields['service'].queryset = self.instance.forfait.service_set.order_by('nom_service')
+                self.fields['forfait'].queryset = forfait.objects.all()
+                if 'forfait' in self.data:
+                    try:
+                        forfait_id = int(self.data.get('forfait'))
+                        self.fields['service'].queryset = service.objects.filter(forfait_id=forfait_id).order_by('nom_service')
+                    except (ValueError, TypeError):
+                        pass
+                #self.fields['service'].queryset = service.objects.none()
 
 
 class all_installation_informationForm(forms.ModelForm):

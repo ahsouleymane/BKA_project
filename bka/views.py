@@ -78,6 +78,16 @@ def validation_installation_informations(request, pk):
     except installation_information.DoesNotExist:
         information = None 
 
+    try:
+        forfait_obj = forfait.objects.all()
+    except installation_information.DoesNotExist:
+        forfait_obj = None 
+
+    try:
+        service_obj = service.objects.all()
+    except installation_information.DoesNotExist:
+        service_obj = None 
+
     if information.status == False:
         information.status = True
         form = validation_installation_informationForm(instance=information)
@@ -86,18 +96,26 @@ def validation_installation_informations(request, pk):
             if form.is_valid():
                 form.save()
                 information.save(update_fields=['status'])
-                return redirect('/list_all_informations/', id=pk)
+                return redirect('/list_all_informations/')
     
-    context = {'form': form}
+    context = {'form': form, 'forfaits': forfait_obj, 'services': service_obj}
     return render(request, 'bka/dg/validation_installation_informations.html', context)
 
 @allowed_users(allowed_roles=['DG'])
+@login_required(login_url='login_page')
+def cascading_ddl(request):
+    forfait_obj = forfait.objects.all()
+    service_obj = service.objects.all()
+    context = {'forfaits': forfait_obj, 'services': service_obj}
+    return render(request, 'bka/dg/list_all_informations.html', context)
+
+""" @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')
 def load_services(request):
     forfait_id = request.GET.get('forfait_id')
     services = service.objects.filter(forfait_id=forfait_id).order_by('nom_service')
     context = {'services': services}
-    return render(request, 'bka/dg/services_dropdown_list_options.html', context)
+    return render(request, 'bka/dg/services_dropdown_list_options.html', context) """
     
 @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')

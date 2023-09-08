@@ -13,7 +13,7 @@ urlpatterns = [
 
     path('validation_installation_informations/<int:pk>/', views.validation_installation_informations, name='validation_installation_informations'),
 
-    path('ajax/load_services/', views.load_services, name='ajax_load_services'),
+    #path('ajax/load_services/', views.load_services, name='ajax_load_services'),
 
     path('cancel_validation/<int:pk>/', views.cancel_validation, name='cancel_validation'),
 

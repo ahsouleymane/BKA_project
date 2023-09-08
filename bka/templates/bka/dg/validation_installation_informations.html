@@ -11,7 +11,7 @@
             <div class="card-header">Formulaire de validation</div>
             <div class="card-body">
 
-                <form action="" id="validation_installation_informationForm" method="POST" data-services-url="{% url 'ajax_load_services' %}">
+                <form action="" id="validation_installation_informationForm" method="POST">
             
                 {% csrf_token %}
                 
@@ -21,33 +21,49 @@
                 {{ form.forfait | as_crispy_field }}
                 {{ form.service | as_crispy_field }}
 
+                <select>
+                    <option selected disabled="true">--- Choisir Forfait ---</option>
+                    {% for forfait in forfaits %}
+                        <option value="{{forfait.forfait_id}}">{{forfait.nom}}</option>
+                    {% endfor %}
+                </select>
+
+                <select>
+                    <option selected disabled="true">--- Choisir Service ---</option>
+                    {% for service in services %}
+                        <option value="{{service.service_id}}">{{service.nom_service}}</option>
+                    {% endfor %}
+                </select>
+
                 <button class="btn btn-light" type="submit" name="submit">
                     valider formulaire
                 </button>
 
                 </form>
 
-                <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-                <script>
-                    $("#id_forfait").change(function (){
-                        const url = $("#validation_installation_informationForm").attr("data-services-url");
-                        const idForfait = $(this).val(); 
-                
-                        $.ajax({
-                            url: url,
-                            data: {
-                                'forfait_id': idForfait
-                            },
-                            success: function(data){
-                                $("#id_service").html(data);
-                            }
-                        });
-                    });
-                </script>
-
             </div>
         </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+            
+<script>
+    $("#id_forfait").change(function (){
+        const url = $("#validation_installation_informationForm").attr("data-services-url");
+        const ForfaitId = $(this).val(); 
+
+        $.ajax({
+            url: url,
+            data: {
+                'forfait_id': ForfaitId
+            },
+            success: function(data){
+                $("#id_service").html(data);
+            }
+        });
+    });
+</script>
+
 
 {% endblock %}

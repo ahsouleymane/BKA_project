@@ -29,7 +29,7 @@ class validation_installation_informationForm(forms.ModelForm):
             'service': 'Service',
         }
 
-    def __init__(self, *args, **kwargs):
+    """ def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             self.fields['service'].queryset = service.objects.none()
 
@@ -40,15 +40,7 @@ class validation_installation_informationForm(forms.ModelForm):
                 except (ValueError, TypeError):
                     pass
             elif self.instance.pk:
-                self.fields['forfait'].queryset = forfait.objects.all()
-                if 'forfait' in self.data:
-                    try:
-                        forfait_id = int(self.data.get('forfait'))
-                        self.fields['service'].queryset = service.objects.filter(forfait_id=forfait_id).order_by('nom_service')
-                    except (ValueError, TypeError):
-                        pass
-                #self.fields['service'].queryset = service.objects.none()
-
+                self.fields['service'].queryset = self.instance.forfait.service_set.order_by('nom_service') """
 
 class all_installation_informationForm(forms.ModelForm):
     class Meta:

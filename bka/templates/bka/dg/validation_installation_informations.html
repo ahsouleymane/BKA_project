@@ -11,29 +11,11 @@
             <div class="card-header">Formulaire de validation</div>
             <div class="card-body">
 
-                <form action="" id="validation_installation_informationForm" method="POST">
+                <form method="POST" id="validationForm" data-services-url="{% url 'ajax_load_services' %}">
             
                 {% csrf_token %}
                 
-                {{ form.instance.customer }} <hr>
-                {{ form.instance.lat}} <hr>
-                {{ form.instance.lon }} <hr>
-                {{ form.forfait | as_crispy_field }}
-                {{ form.service | as_crispy_field }}
-
-                <select>
-                    <option selected disabled="true">--- Choisir Forfait ---</option>
-                    {% for forfait in forfaits %}
-                        <option value="{{forfait.forfait_id}}">{{forfait.nom}}</option>
-                    {% endfor %}
-                </select>
-
-                <select>
-                    <option selected disabled="true">--- Choisir Service ---</option>
-                    {% for service in services %}
-                        <option value="{{service.service_id}}">{{service.nom_service}}</option>
-                    {% endfor %}
-                </select>
+                {{ form.as_p }}
 
                 <button class="btn btn-light" type="submit" name="submit">
                     valider formulaire
@@ -47,23 +29,33 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-            
-<script>
-    $("#id_forfait").change(function (){
-        const url = $("#validation_installation_informationForm").attr("data-services-url");
-        const ForfaitId = $(this).val(); 
 
-        $.ajax({
-            url: url,
+<script>
+    $("#id_forfait").change(function () {
+        const url = $("#validationForm").attr("data-services-url");  // get the url of the `load_cities` view
+        const forfaitId = $(this).val();  // get the selected country ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
             data: {
-                'forfait_id': ForfaitId
+                'forfait_id': forfaitId       // add the country id to the GET parameters
             },
-            success: function(data){
-                $("#id_service").html(data);
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_service").html(data);  // replace the contents of the city input with the data that came from the server
+                /*
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (city) {
+                    html_data += `<option value="${city.id}">${city.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_city").html(html_data);
+
+                */
             }
         });
+
     });
 </script>
-
 
 {% endblock %}

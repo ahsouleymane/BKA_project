@@ -11,9 +11,11 @@ urlpatterns = [
 
     path('add_installation_informations/', views.add_installation_informations, name='add_installation_informations'),
 
-    path('validation_installation_informations/<int:pk>/', views.validation_installation_informations, name='validation_installation_informations'),
+    path('add_validation/<int:pk>/', views.add_validation, name='add_validation'),
 
-    #path('ajax/load_services/', views.load_services, name='ajax_load_services'),
+    path('update_validation/<int:pk>/', views.update_validation, name='update_validation'),
+
+    path('ajax/load_services/', views.load_services, name='ajax_load_services'),
 
     path('cancel_validation/<int:pk>/', views.cancel_validation, name='cancel_validation'),
 

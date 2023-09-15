@@ -11,13 +11,11 @@ class CreateUserForm(UserCreationForm):
 class installation_informationForm(forms.ModelForm):
     class Meta:
         model = installation_information
-        fields = ['customer', 'lat', 'lon', 'forfait', 'service']
+        fields = ['customer', 'lat', 'lon']
         labels = {
             'customer': 'Customer',
             'lat': 'Latitude',
             'lon': 'Longitude',
-            'forfait': 'Forfait',
-            'service': 'Service',
         }
 
 class validationForm(forms.ModelForm):
@@ -26,6 +24,8 @@ class validationForm(forms.ModelForm):
         fields = '__all__'
 
         def __init__(self, *args, **kwargs):
+            super(validationForm,self).__init__(*args, **kwargs)
+            self.fields['customer'].empty_label = "Choisir"
             super().__init__(*args, **kwargs)
             self.fields['service'].queryset = service.objects.none()
 
@@ -38,18 +38,10 @@ class validationForm(forms.ModelForm):
             elif self.instance.pk:
                 self.fields['service'].queryset = self.instance.forfait.service_set.order_by('nom_service')
 
-class all_installation_informationForm(forms.ModelForm):
+class activationForm(forms.ModelForm):
     class Meta:
-        model = installation_information
-        fields = ['customer', 'lat', 'lon', 'forfait', 'service', 'cle_activation']
-        labels = {
-            'customer': 'Customer',
-            'lat': 'Latitude',
-            'lon': 'Longitude',
-            'forfait': 'Forfait',
-            'service': 'Service',
-            'cle_activation': 'Clé Activation',
-        }
+        model = activation
+        fields = '__all__'
 
 class ServiceForm(forms.ModelForm):
     class Meta:

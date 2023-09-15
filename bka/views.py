@@ -74,43 +74,49 @@ def add_installation_informations(request):
 @login_required(login_url='login_page')
 def add_validation(request, pk):
     try:
-        validation = validation.objects.get(id=pk)
+        information = installation_information.objects.get(id=pk)
     except installation_information.DoesNotExist:
-        validation = None 
+        information = None
     
-    if validation.status == False:
-        validation.status = True
+    if information.status == False:
+        information.status = True
         form = validationForm()
         if request.method == 'POST':
             form = validationForm(request.POST)
             if form.is_valid():
                 form.save()
-                validation.save(update_fields=['status'])
+                information.save(update_fields=['status'])
                 return redirect('/list_validations/')
     
     context = {'form': form}
-    return render(request, 'bka/dg/validation_installation_informations.html', context)
+    return render(request, 'bka/dg/validations.html', context)
 
 @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')
 def update_validation(request, pk):
     try:
-        validation = validation.objects.get(id=pk)
+        information = installation_information.objects.get(id=pk)
     except installation_information.DoesNotExist:
-        validation = None 
+        information = None
     
-    if validation.status == False:
-        validation.status = True
-        form = validationForm(instance=validation)
+    if information.status == False:
+        information.status = True
+
+        try:
+            validations = validation.objects.get(id=pk)
+        except validation.DoesNotExist:
+            validations = None 
+
+        form = validationForm(instance=validations)
         if request.method == 'POST':
-            form = validationForm(request.POST, instance=validation)
+            form = validationForm(request.POST, instance=validations)
             if form.is_valid():
                 form.save()
-                validation.save(update_fields=['status'])
+                validations.save(update_fields=['status'])
                 return redirect('/list_validations/', id=pk)
     
     context = {'form': form}
-    return render(request, 'bka/dg/validation_installation_informations.html', context)
+    return render(request, 'bka/dg/validations.html', context)
 
 @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')

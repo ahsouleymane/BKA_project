@@ -5,9 +5,9 @@
 <br>
 
 <div class="row">
-    <div class="container col-md-10">
+    <div class="container col-md-5">
         <div class="card text-white bg-secondary mb-3">
-            <div class="card-header">Liste des informations</div>
+            <div class="card-header" style="color: gold;">Liste des informations non validées</div>
             <div class="card-body">
             <table class="table table-sm">
                 <tr>
@@ -15,6 +15,35 @@
                     <th>Client</th>
                     <th>Latitude</th>
                     <th>Longitude</th>
+                    <th></th>
+                </tr>
+
+                {% for l in list %}
+                    <tr>
+                        {% if l.status == False %}
+
+                            <th></th>
+                            <th>{{ l.customer }}</th>
+                            <th>{{ l.lat }}</th>
+                            <th>{{ l.lon }}</th>
+
+                        {% endif %}
+
+                    </tr>
+                {% endfor %}
+            </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="container col-md-5">
+        <div class="card text-white bg-secondary mb-3">
+            <div class="card-header" style="color: chartreuse;">Liste des informations validées</div>
+            <div class="card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th></th>
+                    <th>Client</th>
                     <th>Forfait</th>
                     <th>Service</th>
                     <th></th>
@@ -22,20 +51,22 @@
 
                 {% for l in list %}
                     <tr>
-                        <th></th>
-                        <th>{{ l.customer }}</th>
-                        <th>{{ l.lat }}</th>
-                        <th>{{ l.lon }}</th>
-                        <th>{{ l.forfait }}</th>
-                        <th>{{ l.service }}</th>
-
                         {% if l.status == False %}
-                            <th><a class="btn btn-outline-light btn-sm" style="width: 80%;" href="{% url 'validation_installation_informations' l.id %}">Validation</a></th>
-                        {% endif %}
 
-                        {% if l.status == True %}
-                            <th><a class="btn btn-outline-warning btn-sm" style="width: 80%;" href="{% url 'cancel_validation' l.id %}">Annuler validation</a></th>
-                        {% endif %}
+                            <th></th>
+                            <th>{{ l.customer }}</th>
+                            <th>{{ l.forfait }}</th>
+                            <th>{{ l.service }}</th>
+
+                            {% if l.status == False %}
+                                <th><a class="btn btn-outline-light btn-sm" style="width: 80%;" href="{% url 'add_validation' l.id %}">Validation</a></th>
+                            {% endif %}
+
+                            {% if l.status == True %}
+                                <th><a class="btn btn-outline-warning btn-sm" style="width: 80%;" href="{% url 'cancel_validation' l.id %}">Annuler validation</a></th>
+                            {% endif %}
+
+                            {% endif %}
 
                     </tr>
                 {% endfor %}

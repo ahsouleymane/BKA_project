@@ -138,7 +138,7 @@ def cancel_validation(request, pk):
         if request.method == "POST":
             information.status = False
             information.save(update_fields=['status'])
-            return redirect('/list_all_informations/')
+            return redirect('/list_validations/')
 
     context = {'item': information}
     return render(request, 'bka/dg/cancel_validation.html', context)
@@ -205,14 +205,14 @@ def list_coordinates_pmo(request):
 
 @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')
-def list_all_informations(request):
+def list_validations(request):
     try:
         list_information = installation_information.objects.all()
     except installation_information.DoesNotExist:
         list_information = None
 
     context = {'list': list_information}
-    return render(request, 'bka/dg/list_all_informations.html', context)
+    return render(request, 'bka/dg/list_validations.html', context)
 
 @allowed_users(allowed_roles=['PMO'])
 @login_required(login_url='login_page')

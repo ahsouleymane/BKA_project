@@ -211,7 +211,9 @@ def list_validations(request):
     except installation_information.DoesNotExist:
         list_information = None
 
-    context = {'list': list_information}
+    form = validationForm()
+
+    context = {'form': form,'list': list_information}
     return render(request, 'bka/dg/list_validations.html', context)
 
 @allowed_users(allowed_roles=['PMO'])

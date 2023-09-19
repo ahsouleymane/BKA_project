@@ -21,11 +21,18 @@ class installation_informationForm(forms.ModelForm):
 class validationForm(forms.ModelForm):
     class Meta:
         model = validation
-        fields = '__all__'
+        fields = ['information', 'forfait', 'service']
+        labels = {
+            'information': 'Customer',
+            'forfait': 'Forfait',
+            'service': 'Service',
+        }
 
         def __init__(self, *args, **kwargs):
             super(validationForm,self).__init__(*args, **kwargs)
-            self.fields['customer'].empty_label = "Choisir"
+            self.fields['information'].empty_label = "Choisir"
+
+        def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             self.fields['service'].queryset = service.objects.none()
 

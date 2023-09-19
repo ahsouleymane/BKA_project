@@ -1,11 +1,12 @@
 {% extends 'bka/dg/main_dg.html' %}
 
+{% load crispy_forms_tags %}
 {% block content %}
 
 <br>
 
 <div class="row">
-    <div class="container col-md-5">
+    <div class="container col-md-4">
         <div class="card text-white bg-secondary mb-3">
             <div class="card-header" style="color: gold;">Liste des informations non validées</div>
             <div class="card-body">
@@ -36,7 +37,7 @@
         </div>
     </div>
 
-    <div class="container col-md-5">
+    <div class="container col-md-6">
         <div class="card text-white bg-secondary mb-3">
             <div class="card-header" style="color: chartreuse;">Liste des informations validées</div>
             <div class="card-body">
@@ -44,6 +45,8 @@
                 <tr>
                     <th></th>
                     <th>Client</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
                     <th>Forfait</th>
                     <th>Service</th>
                     <th></th>
@@ -51,16 +54,14 @@
 
                 {% for l in list %}
                     <tr>
-                        {% if l.status == False %}
+                        {% if l.status == True %}
 
                             <th></th>
                             <th>{{ l.customer }}</th>
-                            <th>{{ l.forfait }}</th>
-                            <th>{{ l.service }}</th>
-
-                            {% if l.status == False %}
-                                <th><a class="btn btn-outline-light btn-sm" style="width: 80%;" href="{% url 'add_validation' l.id %}">Validation</a></th>
-                            {% endif %}
+                            <th>{{ l.lat }}</th>
+                            <th>{{ l.lon }}</th>
+                            <!-- <th>{{ l.forfait }}</th>
+                            <th>{{ l.service }}</th> -->
 
                             {% if l.status == True %}
                                 <th><a class="btn btn-outline-warning btn-sm" style="width: 80%;" href="{% url 'cancel_validation' l.id %}">Annuler validation</a></th>
@@ -71,6 +72,35 @@
                     </tr>
                 {% endfor %}
             </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="container col-md-4">
+        <div class="card text-white bg-secondary mb-3">
+            <div class="card-header" style="color: gold;">Liste des informations non validées</div>
+            <div class="card-body">
+
+                <form method="POST" id="validation_installation_informationForm" data-services-url="{% url 'ajax_load_services' %}">
+            
+                    {% csrf_token %}
+    
+                    {% for message in messages %}
+                        <p style="color: yellowgreen; text-align: center;" id="messages">{{ message }}</p>
+                    {% endfor %}
+                    
+                    {{ form.information | as_crispy_field }}
+                    {{ form.forfait | as_crispy_field }}
+                    {{ form.service | as_crispy_field }}
+    
+                    <button class="btn btn-sm btn-light" type="submit" name="submit">
+                        valider formulaire
+                    </button>
+                    
+                </form>
+
             </div>
         </div>
     </div>

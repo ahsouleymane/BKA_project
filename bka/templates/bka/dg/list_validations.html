@@ -80,7 +80,7 @@
 <div class="row">
     <div class="container col-md-4">
         <div class="card text-white bg-secondary mb-3">
-            <div class="card-header" style="color: gold;">Liste des informations non validées</div>
+            <div class="card-header">Validation informations</div>
             <div class="card-body">
 
                 <form method="POST" id="validation_installation_informationForm" data-services-url="{% url 'ajax_load_services' %}">
@@ -91,9 +91,7 @@
                         <p style="color: yellowgreen; text-align: center;" id="messages">{{ message }}</p>
                     {% endfor %}
                     
-                    {{ form.information | as_crispy_field }}
-                    {{ form.forfait | as_crispy_field }}
-                    {{ form.service | as_crispy_field }}
+                    {{ form.as_p }}
     
                     <button class="btn btn-sm btn-light" type="submit" name="submit">
                         valider formulaire
@@ -105,5 +103,34 @@
         </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+    $("#id_forfait").change(function () {
+        const url = $("#validation_installation_informationForm").attr("data-services-url");  // get the url of the `load_cities` view
+        const forfaitId = $(this).val();  // get the selected country ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'forfait_id': forfaitId       // add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_service").html(data);  // replace the contents of the city input with the data that came from the server
+                /*
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (city) {
+                    html_data += `<option value="${city.id}">${city.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_city").html(html_data);
+
+                */
+            }
+        });
+
+    });
+</script>
 
 {% endblock %}

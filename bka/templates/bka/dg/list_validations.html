@@ -67,7 +67,7 @@
                                 <th><a class="btn btn-outline-warning btn-sm" style="width: 80%;" href="{% url 'cancel_validation' l.id %}">Annuler validation</a></th>
                             {% endif %}
 
-                            {% endif %}
+                        {% endif %}
 
                     </tr>
                 {% endfor %}
@@ -83,7 +83,7 @@
             <div class="card-header">Validation informations</div>
             <div class="card-body">
 
-                <form method="POST" id="validation_installation_informationForm" data-services-url="{% url 'ajax_load_services' %}">
+                <form method="POST" id="validationForm" data-services-url="{% url 'ajax_load_services' %}">
             
                     {% csrf_token %}
     
@@ -107,7 +107,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
     $("#id_forfait").change(function () {
-        const url = $("#validation_installation_informationForm").attr("data-services-url");  // get the url of the `load_cities` view
+        const url = $("#validationForm").attr("data-services-url");  // get the url of the `load_cities` view
         const forfaitId = $(this).val();  // get the selected country ID from the HTML input
 
         $.ajax({                       // initialize an AJAX request

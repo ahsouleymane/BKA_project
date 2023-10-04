@@ -10,7 +10,7 @@ class forfait(models.Model):
 
 class service(models.Model):
     forfait = models.ForeignKey(forfait, null=True, on_delete=models.CASCADE)
-    nom_service = models.CharField(max_length=20, null=True)
+    nom = models.CharField(max_length=20, null=True)
     nom_produit = models.CharField(max_length=50, null=True)
     debit = models.CharField(max_length=20, null=True)
     volume_jour = models.CharField(max_length=20, null=True)
@@ -21,7 +21,7 @@ class service(models.Model):
     date_modif = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.nom_service)
+        return str(self.nom)
     
 class installation_information(models.Model):
     customer = models.CharField(max_length=100, null=True)

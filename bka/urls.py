@@ -11,7 +11,7 @@ urlpatterns = [
 
     path('add_installation_informations/', views.add_installation_informations, name='add_installation_informations'),
 
-    path('add_validation/<int:pk>/', views.add_validation, name='add_validation'),
+    path('add_validation/', views.add_validation, name='add_validation'),
 
     path('update_validation/<int:pk>/', views.update_validation, name='update_validation'),
 

@@ -72,21 +72,13 @@ def add_installation_informations(request):
 
 @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')
-def add_validation(request, pk):
-    try:
-        information = installation_information.objects.get(id=pk)
-    except installation_information.DoesNotExist:
-        information = None
-    
-    if information.status == False:
-        information.status = True
-        form = validationForm()
-        if request.method == 'POST':
-            form = validationForm(request.POST)
-            if form.is_valid():
-                form.save()
-                information.save(update_fields=['status'])
-                return redirect('/list_validations/')
+def add_validation(request):
+    form = validationForm()
+    if request.method == 'POST':
+        form = validationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/list_validations/')
     
     context = {'form': form}
     return render(request, 'bka/dg/validations.html', context)
@@ -122,7 +114,7 @@ def update_validation(request, pk):
 @login_required(login_url='login_page')
 def load_services(request):
     forfait_id = request.GET.get('forfait_id')
-    services = service.objects.filter(forfait_id=forfait_id).order_by('nom_service')
+    services = service.objects.filter(forfait_id=forfait_id).all()
     context = {'services': services}
     return render(request, 'bka/dg/services_dropdown_list_options.html', context)
     
@@ -212,6 +204,11 @@ def list_validations(request):
         list_information = None
 
     form = validationForm()
+    if request.method == 'POST':
+        form = validationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/list_validations/')
 
     context = {'form': form,'list': list_information}
     return render(request, 'bka/dg/list_validations.html', context)

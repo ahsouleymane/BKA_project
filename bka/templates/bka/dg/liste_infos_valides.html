@@ -1,0 +1,45 @@
+{% extends 'bka/dg/main_dg.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+<br>
+
+<div class="row">
+    <div class="container col-md-6">
+        <div class="card text-white bg-secondary mb-3">
+            <div class="card-header" style="color: chartreuse;">Liste des informations validées</div>
+            <div class="card-body">
+            <table class="table table-sm">
+                <tr>
+                    <th></th>
+                    <th>Client</th>
+                    <!-- <th>Latitude</th>
+                    <th>Longitude</th> -->
+                    <th>Forfait</th>
+                    <th>Service</th>
+                    <th></th>
+                </tr>
+
+                {% for l in list_infos_valides %}
+                    <tr>
+                            <th></th>
+                            <th>{{ l.customer }}</th>
+                            <!-- <th>{{ l.lat }}</th>
+                            <th>{{ l.lon }}</th> -->
+                            <th>{{ l.forfait }}</th>
+                            <th>{{ l.service }}</th>
+
+                            {% if l.status == True %}
+                                <th><a class="btn btn-outline-warning btn-sm" style="width: 80%;" href="{% url 'cancel_validation' l.id %}">Annuler validation</a></th>
+                            {% endif %}
+
+                    </tr>
+                {% endfor %}
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

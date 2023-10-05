@@ -210,11 +210,16 @@ def liste_informations(request):
 @login_required(login_url='login_page')
 def liste_infos_valides(request):
     try:
-        list_information = installation_information.objects.all()
+        list_informations = installation_information.objects.all()
     except installation_information.DoesNotExist:
-        list_information = None
+        list_informations = None
 
-    context = {'list': list_information}
+    try:
+        list_informations_valides = validation.objects.all()
+    except validation.DoesNotExist:
+        list_informations_valides = None
+
+    context = {'list_infos': list_informations, 'list_infos_valides': list_informations_valides}
     return render(request, 'bka/dg/liste_infos_valides.html', context)
 
 @allowed_users(allowed_roles=['PMO'])

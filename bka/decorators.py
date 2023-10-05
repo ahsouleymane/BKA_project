@@ -23,7 +23,7 @@ def allowed_users(allowed_roles=[]):
             if group in allowed_roles:
                 return view_func(request, *args, **kwargs)
             elif group == 'DG':
-                return redirect('list_validations')
+                return redirect('liste_informations')
             elif group == 'PMO':
                 return redirect('list_coordinates_pmo')
             elif group == 'tech':
@@ -43,7 +43,7 @@ def user_privileges(view_func):
             group = request.user.groups.all()[0].name
         
         if group == 'DG':
-            return redirect('list_validations')
+            return redirect('liste_informations')
         elif group == 'PMO':
             return redirect('list_coordinates_pmo')
         elif group == 'tech':

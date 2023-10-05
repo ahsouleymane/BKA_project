@@ -27,6 +27,7 @@ class installation_information(models.Model):
     customer = models.CharField(max_length=100, null=True)
     lat = models.FloatField(max_length=20, null=True)
     lon = models.FloatField(max_length=20, null=True)
+    status = models.BooleanField(default=False)
 
     date_ajout = models.DateTimeField(auto_now_add=True)
     date_modif = models.DateTimeField(auto_now=True)
@@ -38,7 +39,7 @@ class validation(models.Model):
     information = models.ForeignKey(installation_information, null=True, on_delete=models.CASCADE)
     forfait = models.ForeignKey(forfait, null=True, on_delete=models.CASCADE)
     service = models.ForeignKey(service, null=True, on_delete=models.CASCADE)
-    status = models.BooleanField(default=False)
+    activer = models.BooleanField(default=False)
 
     date_ajout = models.DateTimeField(auto_now_add=True)
     date_modif = models.DateTimeField(auto_now=True)
@@ -46,7 +47,6 @@ class validation(models.Model):
 class activation(models.Model):
     information = models.ForeignKey(installation_information, null=True, on_delete=models.CASCADE)
     cle_activation = models.CharField(max_length=100, null=True)
-    activer = models.BooleanField(default=False)
 
     date_ajout = models.DateTimeField(auto_now_add=True)
     date_modif = models.DateTimeField(auto_now=True)

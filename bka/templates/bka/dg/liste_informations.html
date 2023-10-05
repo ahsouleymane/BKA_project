@@ -21,11 +21,14 @@
 
                 {% for l in list %}
                     <tr>
+                        {% if l.status == False %}
 
                             <th></th>
                             <th>{{ l.customer }}</th>
                             <th>{{ l.lat }}</th>
                             <th>{{ l.lon }}</th>
+
+                        {% endif %}
 
                     </tr>
                 {% endfor %}

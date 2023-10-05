@@ -27,7 +27,9 @@ urlpatterns = [
 
     path('list_coordinates_pmo/', views.list_coordinates_pmo, name='list_coordinates_pmo'),
 
-    path('list_validations/', views.list_validations, name='list_validations'),
+    path('liste_informations/', views.liste_informations, name='liste_informations'),
+
+    path('liste_infos_valides/', views.liste_infos_valides, name='liste_infos_valides'),
 
     path('list_valid_informations/', views.list_valid_informations, name='list_valid_informations'),
 

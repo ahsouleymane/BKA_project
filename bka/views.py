@@ -78,7 +78,7 @@ def add_validation(request):
         form = validationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/list_validations/')
+            return redirect('/liste_infos_valides/')
     
     context = {'form': form}
     return render(request, 'bka/dg/validations.html', context)
@@ -105,7 +105,7 @@ def update_validation(request, pk):
             if form.is_valid():
                 form.save()
                 validations.save(update_fields=['status'])
-                return redirect('/list_validations/', id=pk)
+                return redirect('/liste_infos_valides/', id=pk)
     
     context = {'form': form}
     return render(request, 'bka/dg/validations.html', context)
@@ -130,7 +130,7 @@ def cancel_validation(request, pk):
         if request.method == "POST":
             information.status = False
             information.save(update_fields=['status'])
-            return redirect('/list_validations/')
+            return redirect('/liste_informations/')
 
     context = {'item': information}
     return render(request, 'bka/dg/cancel_validation.html', context)
@@ -197,21 +197,25 @@ def list_coordinates_pmo(request):
 
 @allowed_users(allowed_roles=['DG'])
 @login_required(login_url='login_page')
-def list_validations(request):
+def liste_informations(request):
     try:
         list_information = installation_information.objects.all()
     except installation_information.DoesNotExist:
         list_information = None
 
-    form = validationForm()
-    if request.method == 'POST':
-        form = validationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/list_validations/')
+    context = {'list': list_information}
+    return render(request, 'bka/dg/liste_informations.html', context)
 
-    context = {'form': form,'list': list_information}
-    return render(request, 'bka/dg/list_validations.html', context)
+@allowed_users(allowed_roles=['DG'])
+@login_required(login_url='login_page')
+def liste_infos_valides(request):
+    try:
+        list_information = installation_information.objects.all()
+    except installation_information.DoesNotExist:
+        list_information = None
+
+    context = {'list': list_information}
+    return render(request, 'bka/dg/liste_infos_valides.html', context)
 
 @allowed_users(allowed_roles=['PMO'])
 @login_required(login_url='login_page')

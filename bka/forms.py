@@ -21,9 +21,9 @@ class installation_informationForm(forms.ModelForm):
 class validationForm(forms.ModelForm):
     class Meta:
         model = validation
-        fields = ['information', 'forfait', 'service']
+        fields = ['customer', 'forfait', 'service']
         labels = {
-            'information': 'Customer',
+            'customer': 'Customer',
             'forfait': 'Forfait',
             'service': 'Service',
         }
@@ -39,11 +39,11 @@ class validationForm(forms.ModelForm):
             if 'forfait' in self.data:
                 try:
                     forfait_id = int(self.data.get('forfait'))
-                    self.fields['service'].queryset = service.objects.filter(forfait_id=forfait_id).order_by('nom')
+                    self.fields['service'].queryset = service.objects.filter(forfait_id=forfait_id).order_by('nom_service')
                 except (ValueError, TypeError):
                     pass
             elif self.instance.pk:
-                self.fields['service'].queryset = self.instance.forfait.service_set.order_by('nom')
+                self.fields['service'].queryset = self.instance.forfait.service_set.order_by('nom_service')
 
 class activationForm(forms.ModelForm):
     class Meta:
@@ -53,9 +53,9 @@ class activationForm(forms.ModelForm):
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = service
-        fields = ['nom', 'nom_produit', 'debit', 'volume_jour', 'volume_nuit', 'validite']
+        fields = ['nom_service', 'nom_produit', 'debit', 'volume_jour', 'volume_nuit', 'validite']
         labels = {
-            'nom': 'Nom Service',
+            'nom_service': 'Nom Service',
             'nom_produit': 'Nom Produit',
             'debit': 'Débit',
             'volume_jour': 'Volume Jour',

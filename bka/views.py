@@ -90,14 +90,14 @@ def update_validation(request, pk):
         information = installation_information.objects.get(id=pk)
     except installation_information.DoesNotExist:
         information = None
-    
-    if information.status == False:
-        information.status = True
 
-        try:
-            validations = validation.objects.get(id=pk)
-        except validation.DoesNotExist:
-            validations = None 
+    try:
+        validations = validation.objects.get(id=pk)
+    except validation.DoesNotExist:
+        validations = None 
+    
+    if information.customer == validation.customer:
+        information.status = True
 
         form = validationForm(instance=validations)
         if request.method == 'POST':

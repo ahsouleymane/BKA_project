@@ -11,13 +11,13 @@
             <div class="card-header">Formulaire de validation</div>
             <div class="card-body">
 
-                <form method="POST" id="validationForm" data-services-url="{% url 'ajax_load_services' %}">
+                <form method="post" id="validationForm" data-services-url="{% url 'ajax_load_services' %}">
             
                 {% csrf_token %}
                 
                 {{ form.as_p }}
 
-                <button class="btn btn-light" type="submit" name="submit">
+                <button class="btn btn-light" type="submit" value="Submit">
                     valider formulaire
                 </button>
 
@@ -28,7 +28,8 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     $("#id_forfait").change(function () {
         const url = $("#validationForm").attr("data-services-url");  // get the url of the `load_cities` view
@@ -44,11 +45,11 @@
                 /*
 
                 let html_data = '<option value="">---------</option>';
-                data.forEach(function (city) {
-                    html_data += `<option value="${city.id}">${city.name}</option>`
+                data.forEach(function (service) {
+                    html_data += `<option value="${service.id}">${service.nom_service}</option>`
                 });
                 console.log(html_data);
-                $("#id_city").html(html_data);
+                $("#id_service").html(html_data);
 
                 */
             }

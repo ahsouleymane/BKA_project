@@ -29,11 +29,8 @@ class validationForm(forms.ModelForm):
         }
 
         def __init__(self, *args, **kwargs):
-            super(validationForm,self).__init__(*args, **kwargs)
-            self.fields['customer'].empty_label = "Choisir"
-
-        def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
+            self.fields['customer'].empty_label = "Choisir"
             self.fields['service'].queryset = service.objects.none()
 
             if 'forfait' in self.data:

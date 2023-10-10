@@ -105,7 +105,7 @@ def update_validation(request, pk):
             if form.is_valid():
                 form.save()
                 validations.save(update_fields=['status'])
-                return redirect('/liste_infos_valides/', id=pk)
+                return redirect('/liste_infos_valides/')
     
     context = {'form': form}
     return render(request, 'bka/dg/validations.html', context)

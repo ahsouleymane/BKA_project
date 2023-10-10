@@ -15,7 +15,7 @@ urlpatterns = [
 
     path('update_validation/<int:pk>/', views.update_validation, name='update_validation'),
 
-    path('ajax/load-services/', views.load_services, name='ajax_load_services'),
+    path('ajax/load-services/', views.load_services, name='ajax_load_services'), # AJAX
 
     path('cancel_validation/<int:pk>/', views.cancel_validation, name='cancel_validation'),
 
